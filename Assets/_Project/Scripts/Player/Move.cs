@@ -3,28 +3,49 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     public float speed = 4; //이동속도
-    public float jumppower = 250; //점프력
+    public float jumppower = 300; //점프력
     [SerializeField] private KeyCode leftkey = KeyCode.A; //좌측이동 키
     [SerializeField] private KeyCode rightkey = KeyCode.D; // 우측이동 키
     [SerializeField] private KeyCode upkey = KeyCode.W; // 점프키
     [SerializeField] private LayerMask groundLayer; // 지면 레이어(비어 있으면 모든 레이어 검사, 자기 콜라이더만 제외)
     [SerializeField] private float groundCheckDistance = 0.12f; // 발밑 지면 검사 거리(점프가 잘 안되면 높여야함)
+    [SerializeField] private float wallCheckDistance = 0.06f; // 벽 감지 여유 거리
+    [SerializeField] private float minGroundNormalY = 0.5f; // 이 값보다 평평한 면만 지면으로 인정
     private Rigidbody2D rigid;
     private SpriteRenderer sprite;
     private Collider2D playerCollider;
+    private bool jumpRequested;
     private void Awake() // 최초로 1회 실행
     {
         rigid = GetComponent<Rigidbody2D>(); // 물리엔진
         sprite = rigid.GetComponent<SpriteRenderer>(); // 스프라이트 랜더러
         playerCollider = GetComponent<Collider2D>(); // 플레이어 충돌체(발 위치 계산용)
     }
-    private void Update() // 매 프레임 1회 실행
+    private void Update()
     {
-        if (Input.GetKey(leftkey)) { rigid.AddForce(new Vector2(-speed, 0)); sprite.flipX = false; } // 좌측 이동
-        if (Input.GetKey(rightkey)) { rigid.AddForce(new Vector2(speed, 0));  sprite.flipX = true; } // 우측 이동
-        if (Input.GetKeyDown(upkey) && IsGrounded()) rigid.AddForce(new Vector2(0, jumppower)); // 지면에 닿았을 때만 점프
-        if(rigid.linearVelocityX > speed*2) { rigid.linearVelocityX = speed*2; } // 우측이동 최고 속도 재한
-        if(rigid.linearVelocityX < speed * -2) { rigid.linearVelocityX = speed * -2; } // 좌측이동 최고 속도 재한
+        if (Input.GetKey(leftkey)) sprite.flipX = false;
+        if (Input.GetKey(rightkey)) sprite.flipX = true;
+        if (Input.GetKeyDown(upkey) && IsGrounded()) jumpRequested = true;
+    }
+
+    private void FixedUpdate() // 물리 이동은 FixedUpdate에서 처리(벽에 밀 때 공중 부양 방지)
+    {
+        float moveX = 0f;
+        if (Input.GetKey(leftkey)) moveX = -1f;
+        if (Input.GetKey(rightkey)) moveX = 1f;
+
+        if (moveX < 0f && IsWallBlocked(Vector2.left)) moveX = 0f;
+        if (moveX > 0f && IsWallBlocked(Vector2.right)) moveX = 0f;
+
+        float targetVelX = moveX * speed;
+        rigid.linearVelocity = new Vector2(targetVelX, rigid.linearVelocity.y);
+
+        if (jumpRequested)
+        {
+            rigid.linearVelocity = new Vector2(rigid.linearVelocity.x, 0f);
+            rigid.AddForce(new Vector2(0f, jumppower), ForceMode2D.Impulse);
+            jumpRequested = false;
+        }
     }
 
     private bool IsGrounded() // 발 아래로 레이캐스트해 지면 여부 판별
@@ -38,9 +59,23 @@ public class Move : MonoBehaviour
         foreach (RaycastHit2D h in hits)
         {
             if (h.collider == null) continue;
-            if (h.collider.transform == transform || h.collider.transform.IsChildOf(transform)) continue; // 자기·자식 콜라이더는 무시
-            return true; // 그 외 충돌체가 있으면 지면에 닿음
+            if (h.collider.transform == transform || h.collider.transform.IsChildOf(transform)) continue;
+            if (h.normal.y < minGroundNormalY) continue; // 벽·천장 면은 지면 아님
+            return true;
         }
-        return false; // 공중
+        return false;
+    }
+
+    private bool IsWallBlocked(Vector2 direction)
+    {
+        if (playerCollider == null) return false;
+        Vector2 origin = playerCollider.bounds.center;
+        float distance = playerCollider.bounds.extents.x + wallCheckDistance;
+        RaycastHit2D hit = groundLayer.value == 0
+            ? Physics2D.Raycast(origin, direction, distance)
+            : Physics2D.Raycast(origin, direction, distance, groundLayer);
+        if (hit.collider == null) return false;
+        if (hit.collider.transform == transform || hit.collider.transform.IsChildOf(transform)) return false;
+        return true;
     }
 }
