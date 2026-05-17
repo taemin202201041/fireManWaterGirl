@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  jumppower: 250
+  jumpPower: 6
   leftkey: 276
   rightkey: 275
   upkey: 273
@@ -160,6 +160,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   groundCheckDistance: 0.12
+  groundRayInsetX: 0.08
+  wallCheckDistance: 0.06
+  minGroundNormalY: 0.5
+  minWallNormalX: 0.5
 --- !u!50 &271992976
 Rigidbody2D:
   serializedVersion: 5
@@ -448,6 +452,7 @@ GameObject:
   - component: {fileID: 677066931}
   - component: {fileID: 677066930}
   - component: {fileID: 677066929}
+  - component: {fileID: 677066932}
   m_Layer: 0
   m_Name: door
   m_TagString: Untagged
@@ -571,6 +576,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &677066932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677066928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab90ae8203ed75e4f8029a061b2bfb56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openOffset: {x: 0, y: 2, z: 0}
+  speed: 5
 --- !u!1 &797898936
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +602,7 @@ GameObject:
   - component: {fileID: 797898940}
   - component: {fileID: 797898939}
   - component: {fileID: 797898938}
-  - component: {fileID: 797898937}
+  - component: {fileID: 797898942}
   m_Layer: 0
   m_Name: water
   m_TagString: Untagged
@@ -591,27 +610,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &797898937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 797898936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e3eed74d09bde54ebad4457c6907435, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 4
-  jumppower: 250
-  leftkey: 97
-  rightkey: 100
-  upkey: 119
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  groundCheckDistance: 0.12
 --- !u!50 &797898938
 Rigidbody2D:
   serializedVersion: 5
@@ -755,6 +753,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &797898942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797898936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e3eed74d09bde54ebad4457c6907435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 4
+  jumpPower: 6
+  leftkey: 97
+  rightkey: 100
+  upkey: 119
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckDistance: 0.12
+  groundRayInsetX: 0.08
+  wallCheckDistance: 0.06
+  minGroundNormalY: 0.5
+  minWallNormalX: 0.5
 --- !u!1 &995138293
 GameObject:
   m_ObjectHideFlags: 0
