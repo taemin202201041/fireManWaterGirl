@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = AwakeInstance();
+            DontDestroyOnLoad(gameObject); //ÆÄ±«¹æÁö
         }
         else
         {

@@ -1,6 +1,7 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class Move : MonoBehaviour
+public class Move : NetworkBehaviour
 {
     public float speed = 4f;
     public float jumpPower = 300f;
@@ -21,6 +22,20 @@ public class Move : MonoBehaviour
     private bool jumpCutRequested;
     private bool isGroundedCache; // FixedUpdate에서 한 번만 계산
 
+    public override void OnNetworkSpawn() 
+    {
+        if (IsOwner == false) 
+        {
+            Debug.Log("주인 아님");
+            sprite.color = new Color32(78, 98, 230, 255);
+            gameObject.layer = 6;
+            enabled = false;
+        }
+        else 
+        {
+            Debug.Log("내꺼임");
+        }
+    }
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();

@@ -9,7 +9,7 @@ public class Gem : MonoBehaviour
         {
             Debug.Log(collision.name + " Áª È¹µæ!");
             //°ÔÀÓ¸Þ´ÏÀú¿¡¼­ ÁªÈ¹µæ Ä«¿îÆ®
-            // GameManager.Instance.gemCount += 1;
+            //GameManager.Instance.gemCount += 1;
             GameObject.Destroy(gameObject);
         }
     }
