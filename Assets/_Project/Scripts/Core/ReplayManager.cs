@@ -12,8 +12,14 @@ using UnityEngine;
 
 public class ReplayManager : MonoBehaviour
 {
+
+    public static ReplayManager Instance { get; private set; }
+
     private async void Start()
     {
+        if (Instance != null){ Destroy(gameObject); return; }
+        DontDestroyOnLoad(gameObject); //파괴방지
+        ReplayManager.Instance = this;
         // 유니티 클라우드 서비스 초기화 및 로그인
         await UnityServices.InitializeAsync();
 
