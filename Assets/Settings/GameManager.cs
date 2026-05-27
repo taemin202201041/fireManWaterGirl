@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
     public bool isFireboyReady = false;
     public bool isWatergirlReady = false;
     private bool isGameOver = false;
+    public NetworkManager netWorkManager;
 
     private void Awake()
     {
@@ -18,6 +20,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = AwakeInstance();
             DontDestroyOnLoad(gameObject); //ÆÄ±«¹æÁö
+            DontDestroyOnLoad(netWorkManager.gameObject); //ÆÄ±«¹æÁö
         }
         else
         {
