@@ -12,6 +12,11 @@ public class GameManager : MonoBehaviour
     public bool isWatergirlReady = false;
     private bool isGameOver = false;
     public NetworkManager netWorkManager;
+    public GameObject fireManSingle;
+    public GameObject waterGirlSingle;
+    public Move fireMan;
+    public Move waterGirl;
+    public Map Map;
 
     private void Awake()
     {
@@ -57,22 +62,31 @@ public class GameManager : MonoBehaviour
     {
         if (isFireboyReady && isWatergirlReady)
         {
-            Debug.Log("스테이지 클리어! 다음 스테이지로 이동합니다.");
-            // 다음 씬 로드 (Build Settings에 등록된 순서 기준)
-            int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-
-            // 다음 씬이 존재하면 로드, 없으면 처음으로 돌아가거나 메인화면 이동
-            if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
-            {
-                SceneManager.LoadScene(nextSceneIndex);
-            }
-            else
-            {
-                Debug.Log("모든 스테이지를 클리어했습니다!");
-            }
+            NextStage();
         }
     }
+    public void NextStage() 
+    {
+        Debug.Log("스테이지 클리어! 다음 스테이지로 이동합니다.");
+        // 다음 씬 로드 (Build Settings에 등록된 순서 기준)
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
+        // 다음 씬이 존재하면 로드, 없으면 처음으로 돌아가거나 메인화면 이동
+        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(nextSceneIndex);
+        }
+        else
+        {
+            Debug.Log("모든 스테이지를 클리어했습니다!");
+        }
+    }
+    public void SinglePlayStart() 
+    {
+        fireMan = Instantiate(fireManSingle).GetComponent<Move>();
+        waterGirl = Instantiate(waterGirlSingle).GetComponent<Move>();
+        NextStage();
+    }
     /// 플레이어가 속성에 맞지 않는 함정에 빠졌을 때 호출되는 함수
     public void TriggerGameOver()
     {
