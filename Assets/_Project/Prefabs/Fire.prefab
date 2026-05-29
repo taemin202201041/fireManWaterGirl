@@ -163,9 +163,9 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   speed: 4
   jumpPower: 8
-  leftkey: 276
-  rightkey: 275
-  upkey: 273
+  leftkey: 97
+  rightkey: 100
+  upkey: 119
   groundLayer:
     serializedVersion: 2
     m_Bits: 0

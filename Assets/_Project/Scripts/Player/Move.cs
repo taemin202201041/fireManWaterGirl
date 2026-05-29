@@ -24,12 +24,11 @@ public class Move : NetworkBehaviour
 
     public override void OnNetworkSpawn() 
     {
-        if (IsOwner == false) 
+        if (GameManager.Instance.fireMan != null) 
         {
             Debug.Log("게스트 프리펩 생성");
             sprite.color = new Color32(78, 98, 230, 255);
             gameObject.layer = 6;
-            enabled = false;
             GameManager.Instance.waterGirl = this;
         }
         else 
@@ -37,6 +36,7 @@ public class Move : NetworkBehaviour
             Debug.Log("호스트 프리펩 생성");
             GameManager.Instance.fireMan = this;
         }
+        if (IsOwner == false) { enabled = false; }
     }
     private void Awake()
     {
