@@ -14,4 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/example1.unity
     guid: e50bfd95e7df59f4382c92b26bbdcf9b
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/_Project/Scenes/Network.unity
+    guid: 3694a7f9a78b5c848b50e79dbdbd39e9
+  m_configObjects:
+    com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
