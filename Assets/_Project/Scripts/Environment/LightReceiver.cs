@@ -4,19 +4,24 @@ using UnityEngine.Events;
 public class LightReceiver : MonoBehaviour
 {
     public UnityEvent onActivate;
+    public UnityEvent onDeactivate;
+
     private bool isActive = false;
+    private bool wasActive = false;
 
     public void Activate()
     {
-        if (!isActive)
-        {
-            isActive = true;
+        isActive = true;
+        if (!wasActive)
             onActivate?.Invoke();
-        }
     }
 
     void LateUpdate()
     {
-        isActive = false; // 매 프레임 초기화 → 빛이 끊기면 자동 비활성화
+        if (wasActive && !isActive)
+            onDeactivate?.Invoke();
+
+        wasActive = isActive;
+        isActive = false;
     }
 }

@@ -28,7 +28,8 @@ public class LightBeam : MonoBehaviour
 
         for (int i = 0; i < maxReflections; i++)
         {
-            RaycastHit2D hit = Physics2D.Raycast(origin, direction, maxDistance, mirrorLayer | targetLayer);
+            // 모든 콜라이더 감지 (Mirror, Target, 벽, 플레이어 등)
+            RaycastHit2D hit = Physics2D.Raycast(origin, direction, maxDistance);
 
             if (!hit)
             {
@@ -38,15 +39,26 @@ public class LightBeam : MonoBehaviour
 
             points.Add(hit.point);
 
+            // 수신기 → 활성화
             if (((1 << hit.collider.gameObject.layer) & targetLayer) != 0)
             {
                 hit.collider.GetComponent<LightReceiver>()?.Activate();
                 break;
             }
 
-            // 반사: r = d - 2(d·n)n
-            direction = Vector2.Reflect(direction, hit.normal);
-            origin = hit.point + direction * 0.01f;
+            // 거울 → 반사
+            if (((1 << hit.collider.gameObject.layer) & mirrorLayer) != 0)
+            {
+
+                // 반사: r = d - 2(d·n)n
+                direction = Vector2.Reflect(direction, hit.normal);
+                origin = hit.point + direction * 0.01f;
+            }
+            else
+            {
+                // 그 외 (벽, 플레이어 등) → 차단
+                break;
+            }
         }
 
         lineRenderer.positionCount = points.Count;

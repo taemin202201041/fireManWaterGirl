@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Pulley : MonoBehaviour
@@ -7,10 +8,12 @@ public class Pulley : MonoBehaviour
     public Transform platformB;
     public float totalRopeLength = 5f;
     public float moveSpeed = 2f;
+    [SerializeField] private float boxWeight = 1.5f;
 
     [Header("줄 시각화")]
     public LineRenderer ropeRenderer;
     public Transform pulleyCenter;
+    public Transform pulleyCenter2;
 
     private Rigidbody2D rbA;
     private Rigidbody2D rbB;
@@ -27,12 +30,12 @@ public class Pulley : MonoBehaviour
 
     void FixedUpdate()
     {
-        bool playerOnA = IsPlayerOn(platformA);
-        bool playerOnB = IsPlayerOn(platformB);
+        float weightA = GetWeightOn(platformA);
+        float weightB = GetWeightOn(platformB);
 
         float delta = 0f;
-        if (playerOnA && !playerOnB) delta = -moveSpeed * Time.fixedDeltaTime; // A 내려감
-        else if (playerOnB && !playerOnA) delta = moveSpeed * Time.fixedDeltaTime;  // B 내려감 → A 올라감
+        if (weightA > weightB) delta = -moveSpeed * Time.fixedDeltaTime;
+        else if (weightB > weightA) delta = moveSpeed * Time.fixedDeltaTime;
 
         float halfRope = totalRopeLength * 0.5f;
         float currentOffsetA = platformA.position.y - baseA_Y;
@@ -41,7 +44,7 @@ public class Pulley : MonoBehaviour
         Vector3 posA = platformA.position;
         posA.y = baseA_Y + newOffsetA;
         Vector3 posB = platformB.position;
-        posB.y = baseB_Y - newOffsetA; // A와 반대 방향
+        posB.y = baseB_Y - newOffsetA;
 
         if (rbA != null) rbA.MovePosition(posA);
         else platformA.position = posA;
@@ -52,32 +55,54 @@ public class Pulley : MonoBehaviour
         UpdateRopeVisual();
     }
 
-    private bool IsPlayerOn(Transform platform)
+    private float GetWeightOn(Transform platform)
     {
         Collider2D col = platform.GetComponent<Collider2D>();
-        if (col == null) return false;
+        if (col == null) return 0f;
 
         Bounds b = col.bounds;
         Vector2 checkCenter = new Vector2(b.center.x, b.max.y + 0.1f);
         Vector2 checkSize = new Vector2(b.size.x * 0.8f, 0.2f);
 
+        float total = 0f;
         Collider2D[] hits = Physics2D.OverlapBoxAll(checkCenter, checkSize, 0f);
         foreach (var h in hits)
         {
-            if (h.CompareTag("Player")) return true;
+            if (h.CompareTag("Player")) total += 1f;
+            else if (h.GetComponent<Box>() != null) total += boxWeight;
         }
-        return false;
+        return total;
     }
 
     void UpdateRopeVisual()
     {
         if (ropeRenderer == null || pulleyCenter == null) return;
-        ropeRenderer.positionCount = 3;
-        ropeRenderer.SetPositions(new Vector3[]
+
+        List<Vector3> points = new List<Vector3>();
+
+        float topY = pulleyCenter.position.y;
+        float topY2 = pulleyCenter2 != null ? pulleyCenter2.position.y : topY;
+
+        // PlatformA → 수직 상승 → PulleyCenter
+        points.Add(platformA.position);
+        points.Add(new Vector3(platformA.position.x, topY, 0f));
+        points.Add(pulleyCenter.position);
+
+        // PulleyCenter → PulleyCenter2 (있을 경우)
+        if (pulleyCenter2 != null)
         {
-            platformA.position,
-            pulleyCenter.position,
-            platformB.position
-        });
+            points.Add(pulleyCenter2.position);
+            points.Add(new Vector3(platformB.position.x, topY2, 0f));
+        }
+        else
+        {
+            points.Add(new Vector3(platformB.position.x, topY, 0f));
+        }
+
+        // 수직 하강 → PlatformB
+        points.Add(platformB.position);
+
+        ropeRenderer.positionCount = points.Count;
+        ropeRenderer.SetPositions(points.ToArray());
     }
 }

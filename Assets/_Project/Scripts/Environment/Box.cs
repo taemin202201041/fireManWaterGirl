@@ -1,1 +1,11 @@
-// 박스가 벽에 붙어있을때 빼내는 기능 구현 필요
+using UnityEngine;
+
+public class Box : MonoBehaviour
+{
+    private Rigidbody2D rigid;
+
+    private void Awake()
+    {
+        rigid = GetComponent<Rigidbody2D>();
+    }
+}
