@@ -49,13 +49,15 @@ public class ReplayManager : MonoBehaviour
 
             // 접속에 필요한 6자리 Join Code 가져오기
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
-            text.text = "room: "+joinCode;
+            text.text = "방번호: "+joinCode;
 
             UnityTransport utp = NetworkManager.Singleton.GetComponent<UnityTransport>();
             RelayServerData serverData = new RelayServerData(allocation, "dtls");
             utp.SetRelayServerData(serverData);
 
             NetworkManager.Singleton.StartHost();
+
+            GameManager.Instance.NextStage(); // 맵 로딩
 
             return joinCode;
         }
@@ -82,6 +84,8 @@ public class ReplayManager : MonoBehaviour
 
             // 클라이언트 시작
             NetworkManager.Singleton.StartClient();
+
+            GameManager.Instance.NextStage(); //맵 로딩
         }
         catch (RelayServiceException e)
         {

@@ -24,20 +24,23 @@ public class Move : NetworkBehaviour
 
     public override void OnNetworkSpawn() 
     {
-        if (IsOwner == false) 
+        if (GameManager.Instance.fireMan != null) 
         {
-            Debug.Log("주인 아님");
+            Debug.Log("게스트 프리펩 생성");
             sprite.color = new Color32(78, 98, 230, 255);
             gameObject.layer = 6;
-            enabled = false;
+            GameManager.Instance.waterGirl = this;
         }
         else 
         {
-            Debug.Log("내꺼임");
+            Debug.Log("호스트 프리펩 생성");
+            GameManager.Instance.fireMan = this;
         }
+        if (IsOwner == false) { enabled = false; }
     }
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         playerCollider = GetComponent<Collider2D>();
