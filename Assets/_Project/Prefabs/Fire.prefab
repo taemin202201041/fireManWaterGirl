@@ -168,7 +168,7 @@ MonoBehaviour:
   upkey: 119
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   groundCheckDistance: 0.15
   groundRayInsetX: 0.01
   wallCheckDistance: 0.08

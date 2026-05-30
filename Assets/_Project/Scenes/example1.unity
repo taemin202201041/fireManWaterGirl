@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 481284394}
   - component: {fileID: 481284393}
   - component: {fileID: 481284395}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -492,7 +492,7 @@ GameObject:
   - component: {fileID: 995138298}
   - component: {fileID: 995138299}
   - component: {fileID: 995138300}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1199,7 +1199,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1825946903}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1328,7 +1328,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   isFireboyReady: 0
   isWatergirlReady: 0
-  netWorkManager: {fileID: 2000083674}
+  netWorkManager: {fileID: 0}
+  fireManSingle: {fileID: 0}
+  waterGirlSingle: {fileID: 0}
+  fireMan: {fileID: 0}
+  waterGirl: {fileID: 0}
+  Map: {fileID: 0}
 --- !u!4 &1311952139
 Transform:
   m_ObjectHideFlags: 0
@@ -1374,9 +1379,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1825946903}
-  - {fileID: 1091540774}
+  m_Children: []
   m_Father: {fileID: 1730398919}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1425,7 +1428,7 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1373550873}
-  m_TextViewport: {fileID: 1825946903}
+  m_TextViewport: {fileID: 0}
   m_TextComponent: {fileID: 1173907402}
   m_Placeholder: {fileID: 1700183867}
   m_VerticalScrollbar: {fileID: 0}
@@ -1553,7 +1556,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1091540774}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1815,7 +1818,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1825946903}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2037,7 +2040,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 259121772}
   - {fileID: 1373550871}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2703,10 +2705,11 @@ SceneRoots:
   - {fileID: 1013461056}
   - {fileID: 1109554744}
   - {fileID: 225566942}
-  - {fileID: 2000083675}
   - {fileID: 1730398919}
-  - {fileID: 1987759746}
   - {fileID: 1311952139}
   - {fileID: 1659212363}
   - {fileID: 1190873427}
   - {fileID: 1627555028}
+  - {fileID: 1173907404}
+  - {fileID: 1571456001}
+  - {fileID: 1700183865}
