@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.Rendering;
 
 public class Move : NetworkBehaviour
 {
@@ -143,10 +144,9 @@ public class Move : NetworkBehaviour
                 head.transform.SetLocalPositionAndRotation(new Vector3(0, 0.7f, 0), head.transform.rotation);
             }
         }
-
-        Vector2 vel = rigid.linearVelocity;
+        else { head.Play("Walk"); body.Play("Walk"); }
+            Vector2 vel = rigid.linearVelocity;
         vel.x = moveX * speed;
-        if (Mathf.Abs(vel.x) > 0) { body.Play("Walk"); head.Play("Walk"); }
 
         // BUG2 FIX: 공중일 때만 벽 차단 적용
         // 지상에서는 물리 마찰(PhysicsMaterial2D)이 처리하므로 벽 차단 불필요
