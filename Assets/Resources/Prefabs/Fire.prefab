@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 3432214437339266259}
   - component: {fileID: -3538569072254266811}
   - component: {fileID: 6378596311350506230}
-  - component: {fileID: 1205239436658469215}
+  - component: {fileID: 8415785949705714365}
   m_Layer: 3
   m_Name: Fire
   m_TagString: Player
@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2425660892
+  GlobalObjectIdHash: 224122411
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -464,7 +464,7 @@ Animator:
   m_GameObject: {fileID: 5941447738101466774}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 84d7ac8677415b54e9aeabe5b8579d0d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -476,7 +476,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1205239436658469215
+--- !u!114 &8415785949705714365
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
