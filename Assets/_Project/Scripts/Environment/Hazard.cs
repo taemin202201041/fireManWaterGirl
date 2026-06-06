@@ -1,21 +1,30 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // 씬 재시작용
 
 public class Hazard : MonoBehaviour
 {
+    public enum HazardType { Fire, Water, Both }
+    public HazardType type = HazardType.Both;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // 충돌한 대상이 플레이어인지 확인
-        if (collision.CompareTag("Player"))
+        if (!collision.CompareTag("Player")) return;
+
+        string name = collision.gameObject.name;
+        bool isFireboy   = name.Contains("Fire");
+        bool isWatergirl = name.Contains("Water");
+
+        bool shouldDie = type switch
+        {
+            HazardType.Fire  => isWatergirl, // 불 웅덩이: 물소녀만 죽음
+            HazardType.Water => isFireboy,   // 물 웅덩이: 불소년만 죽음
+            HazardType.Both  => true,
+            _ => false
+        };
+
+        if (shouldDie)
         {
             Debug.Log(collision.name + " 사망!");
-            RestartLevel();
+            GameManager.Instance.TriggerGameOver();
         }
-    }
-
-    void RestartLevel()
-    {
-        // 현재 씬을 다시 로드 (나중에 GameManager에서 처리하는게 좋음)
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

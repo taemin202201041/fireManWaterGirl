@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git restore *)"
+      "Bash(git restore *)",
+      "Bash(Get-ChildItem \"C:\\\\Users\\\\rlaxo\\\\OneDrive\\\\Desktop\\\\fireManWaterGirl\\\\fireManWaterGirl\\\\Assets\" -Recurse -Directory)",
+      "Bash(Select-Object FullName)"
     ]
   }
 }
