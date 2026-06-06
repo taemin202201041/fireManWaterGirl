@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Mirror
   layers:
   - Default
   - TransparentFX
@@ -13,12 +14,12 @@ TagManager:
   - UI
   - WaterGirl
   - Ground
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Mirror
+  - LightTarget
+  - lever magea
+  - lever
+  - boxoutline
+  - mirrorline
   - 
   - 
   - 

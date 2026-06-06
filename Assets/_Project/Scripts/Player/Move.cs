@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.Rendering;
 
 public class Move : NetworkBehaviour
 {
@@ -18,23 +19,31 @@ public class Move : NetworkBehaviour
     private Rigidbody2D rigid;
     private SpriteRenderer sprite;
     private Collider2D playerCollider;
+    public Animator head;
+    public Animator body;
     private bool jumpRequested;
     private bool jumpCutRequested;
     private bool isGroundedCache; // FixedUpdate에서 한 번만 계산
+    public bool fire;
 
     public override void OnNetworkSpawn() 
     {
         if (GameManager.Instance.fireMan != null) 
         {
             Debug.Log("게스트 프리펩 생성");
-            sprite.color = new Color32(78, 98, 230, 255);
+            head.gameObject.transform.SetLocalPositionAndRotation(new Vector3(0,0.7f,0),new Quaternion(0,0,0,0));
             gameObject.layer = 6;
+            body.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Water");
+            head.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("WaterHead");
             GameManager.Instance.waterGirl = this;
         }
         else 
         {
             Debug.Log("호스트 프리펩 생성");
+            body.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Fire");
+            head.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("FireHead");
             GameManager.Instance.fireMan = this;
+            fire = true;
         }
         if (IsOwner == false) { enabled = false; }
     }
@@ -57,8 +66,30 @@ public class Move : NetworkBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(leftkey)) sprite.flipX = false;
-        if (Input.GetKey(rightkey)) sprite.flipX = true;
+        if (Input.GetKey(leftkey)) 
+        { 
+            sprite.flipX = true;
+            if (fire)
+            {
+                head.gameObject.transform.SetLocalPositionAndRotation(new Vector3(0.2f, 0.63f, 0), new Quaternion(0, 180, 0, 0));
+            }
+            else 
+            {
+                head.gameObject.transform.SetLocalPositionAndRotation(new Vector3(0.2f, 0.65f, 0), new Quaternion(0, 180, 0, 0));
+            }
+        }
+        if (Input.GetKey(rightkey)) 
+        { 
+            sprite.flipX = false;
+            if (fire)
+            {
+                head.gameObject.transform.SetLocalPositionAndRotation(new Vector3(-0.2f, 0.63f, 0), new Quaternion(0, 0, 0, 0));
+            }
+            else
+            {
+                head.gameObject.transform.SetLocalPositionAndRotation(new Vector3(-0.2f, 0.65f, 0), new Quaternion(0, 0, 0, 0));
+            }
+        }
 
         // BUG1 FIX: Update에서 IsGrounded() 호출 → FixedUpdate 타이밍과 불일치 방지
         // jumpRequested 플래그만 세우고 실제 판정은 FixedUpdate에서 수행
@@ -100,8 +131,21 @@ public class Move : NetworkBehaviour
         float moveX = 0f;
         if (Input.GetKey(leftkey)) moveX = -1f;
         if (Input.GetKey(rightkey)) moveX = 1f;
-
-        Vector2 vel = rigid.linearVelocity;
+        if(moveX == 0) 
+        {
+            head.Play("Idle");
+            body.Play("Idle");
+            if (fire)
+            {
+                head.transform.SetLocalPositionAndRotation(new Vector3(0, 0.8f, 0), head.transform.rotation);
+            }
+            else
+            {
+                head.transform.SetLocalPositionAndRotation(new Vector3(0, 0.7f, 0), head.transform.rotation);
+            }
+        }
+        else { head.Play("Walk"); body.Play("Walk"); }
+            Vector2 vel = rigid.linearVelocity;
         vel.x = moveX * speed;
 
         // BUG2 FIX: 공중일 때만 벽 차단 적용
