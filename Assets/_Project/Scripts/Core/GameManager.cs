@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public Move fireMan;
     public Move waterGirl;
     public Map Map;
+    bool temp; //맵 중복 실행 방지용
 
     private void Awake()
     {
@@ -43,11 +44,12 @@ public class GameManager : MonoBehaviour
     public void NextStage()
     {
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
-            SceneManager.LoadScene(nextSceneIndex);
+        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings && temp ==false)
+        { Invoke(nameof(go), 0.5f); temp = true; }
         else
             Debug.Log("모든 스테이지를 클리어했습니다!");
     }
+    public void go() { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); temp = false; }
 
     public void SinglePlayStart()
     {
@@ -61,7 +63,7 @@ public class GameManager : MonoBehaviour
         if (isGameOver) return;
         isGameOver = true;
         Debug.Log("게임 오버! 3초 후 스테이지를 재시작합니다.");
-        Invoke(nameof(RestartStage), 3f);
+        Invoke(nameof(RestartStage), 0f);
     }
 
     private void RestartStage()

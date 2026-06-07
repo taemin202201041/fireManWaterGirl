@@ -1,31 +1,21 @@
 using UnityEngine;
+using UnityEngine.SceneManagement; // 씬 재시작용
 
 public class Hazard : MonoBehaviour
 {
-    public enum HazardType { Fire, Water, Both }
-    public HazardType type = HazardType.Both;
-
-    [SerializeField] private LayerMask fireboyLayer;
-    [SerializeField] private LayerMask watergirlLayer;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        int objLayer = 1 << collision.gameObject.layer;
-        bool isFireboy   = (fireboyLayer.value & objLayer) != 0;
-        bool isWatergirl = (watergirlLayer.value & objLayer) != 0;
-
-        bool shouldDie = type switch
+        // 충돌한 대상이 플레이어인지 확인
+        if (collision.gameObject.CompareTag("Player"))
         {
-            HazardType.Fire  => isWatergirl,
-            HazardType.Water => isFireboy,
-            HazardType.Both  => isFireboy || isWatergirl,
-            _ => false
-        };
-
-        if (shouldDie)
-        {
-            Debug.Log(collision.name + " 사망!");
-            GameManager.Instance.TriggerGameOver();
+            Debug.Log(collision.gameObject.name + " 사망!");
+            RestartLevel();
         }
+    }
+
+    void RestartLevel()
+    {
+        // 현재 씬을 다시 로드 (나중에 GameManager에서 처리하는게 좋음)
+        GameManager.Instance.TriggerGameOver();
     }
 }
