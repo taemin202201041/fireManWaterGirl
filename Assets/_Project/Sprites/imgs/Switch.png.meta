@@ -106,6 +106,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -125,8 +138,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1560d1276c3de1348b56e48b650802ce
-      internalID: -1980980563
+      spriteID: 43d16ca8b54e4dd48bab516e36ae0880
+      internalID: 17578668
       vertices: []
       indices: 
       edges: []
@@ -147,8 +160,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8db40436fac2f5c4fa0c9967df306e97
-      internalID: 1917637513
+      spriteID: 7574dfa29368311458c540a607bceb1b
+      internalID: 51249043
       vertices: []
       indices: 
       edges: []
@@ -169,8 +182,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8eb4fff09d9c37e4ca3fa3b070ee4875
-      internalID: 899003834
+      spriteID: 55a3ed9aff2aa92458be0fe0fec46011
+      internalID: -1601699624
       vertices: []
       indices: 
       edges: []
@@ -191,8 +204,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e87ef429a0dfa94c954bbbb62cb84fe
-      internalID: -1517534226
+      spriteID: f8ff12641d032d14bbec82781a011c6d
+      internalID: 490782268
       vertices: []
       indices: 
       edges: []
@@ -213,8 +226,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 200685cc444c951458927d1e9e6d7ed8
-      internalID: 945364494
+      spriteID: 05c197e8d1dbb0d4292b9cee7c7115b8
+      internalID: -1448731848
       vertices: []
       indices: 
       edges: []
@@ -235,8 +248,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c260a15b40534be468e3dc23961395bf
-      internalID: -1715305041
+      spriteID: f7d4065f765b4b149a806246b19812da
+      internalID: -461578286
       vertices: []
       indices: 
       edges: []
@@ -257,8 +270,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4bfb6845cb87a94c89e95e93ba332e1
-      internalID: 1314207427
+      spriteID: 8316a417ef492144a922f535767e7560
+      internalID: -797021821
       vertices: []
       indices: 
       edges: []
@@ -267,7 +280,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7aa9adc49a77b5142b8c997d106b6e59
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -279,13 +292,13 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Switch_0: -1980980563
-      Switch_1: 1917637513
-      Switch_2: 899003834
-      Switch_3: -1517534226
-      Switch_4: 945364494
-      Switch_5: -1715305041
-      Switch_6: 1314207427
+      Switch_0: 17578668
+      Switch_1: 51249043
+      Switch_2: -1601699624
+      Switch_3: 490782268
+      Switch_4: -1448731848
+      Switch_5: -461578286
+      Switch_6: -797021821
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

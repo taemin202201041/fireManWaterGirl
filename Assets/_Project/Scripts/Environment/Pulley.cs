@@ -15,11 +15,16 @@ public class Pulley : MonoBehaviour
     public Transform pulleyCenter;
     public Transform pulleyCenter2;
 
+    [Header("체인 시각화")]
+    public GameObject chainLinkPrefab;
+    public float linkSpacing = 0.3f;
+
     private Rigidbody2D rbA;
     private Rigidbody2D rbB;
-    private float totalRopeLength; // Start()에서 초기 위치로 자동 계산
-    private float topA_Y;          // pulleyCenter.y (A측 도르래 꼭대기)
-    private float topB_Y;          // pulleyCenter2.y (B측 도르래 꼭대기)
+    private float totalRopeLength;
+    private float topA_Y;
+    private float topB_Y;
+    private List<GameObject> chainLinks = new List<GameObject>();
 
     void Start()
     {
@@ -29,10 +34,12 @@ public class Pulley : MonoBehaviour
         topA_Y = pulleyCenter != null ? pulleyCenter.position.y : transform.position.y;
         topB_Y = pulleyCenter2 != null ? pulleyCenter2.position.y : topA_Y;
 
-        // 실제 로프 길이 = 초기 상태에서 각 측 줄 길이의 합
         float hangA = topA_Y - platformA.position.y;
         float hangB = topB_Y - platformB.position.y;
         totalRopeLength = hangA + hangB;
+
+        if (chainLinkPrefab != null && ropeRenderer != null)
+            ropeRenderer.enabled = false;
     }
 
     void FixedUpdate()
@@ -41,18 +48,15 @@ public class Pulley : MonoBehaviour
         float weightB = GetWeightOn(platformB);
 
         float delta = 0f;
-        if (weightA > weightB) delta = moveSpeed * Time.fixedDeltaTime;     // A 아래로
-        else if (weightB > weightA) delta = -moveSpeed * Time.fixedDeltaTime; // B 아래로
+        if (weightA > weightB) delta = moveSpeed * Time.fixedDeltaTime;
+        else if (weightB > weightA) delta = -moveSpeed * Time.fixedDeltaTime;
 
-        // 현재 hang 길이 (도르래 꼭대기 ~ 플랫폼 위치)
         float hangA = topA_Y - platformA.position.y;
         float hangB = topB_Y - platformB.position.y;
 
-        // 로프 제약: hangA + hangB = totalRopeLength (항상 일정)
         float newHangA = Mathf.Max(0f, hangA + delta);
         float newHangB = totalRopeLength - newHangA;
 
-        // 어느 쪽도 도르래 위로 올라갈 수 없음
         if (newHangB < 0f)
         {
             newHangB = 0f;
@@ -62,7 +66,6 @@ public class Pulley : MonoBehaviour
         float newA_Y = topA_Y - newHangA;
         float newB_Y = topB_Y - newHangB;
 
-        // 바닥 감지: 한쪽이 바닥에 닿으면 hang을 고정하고 반대쪽도 연동하여 정지
         float floorA = GetFloorY(platformA);
         float floorB = GetFloorY(platformB);
 
@@ -82,10 +85,8 @@ public class Pulley : MonoBehaviour
             newA_Y = topA_Y - newHangA;
         }
 
-        Vector3 posA = platformA.position;
-        posA.y = newA_Y;
-        Vector3 posB = platformB.position;
-        posB.y = newB_Y;
+        Vector3 posA = platformA.position; posA.y = newA_Y;
+        Vector3 posB = platformB.position; posB.y = newB_Y;
 
         if (rbA != null) rbA.MovePosition(posA);
         else platformA.position = posA;
@@ -96,7 +97,6 @@ public class Pulley : MonoBehaviour
         UpdateRopeVisual();
     }
 
-    // 플랫폼 아래 바닥 Y를 반환 (바닥 없으면 NegativeInfinity)
     private float GetFloorY(Transform platform)
     {
         Collider2D col = platform.GetComponent<Collider2D>();
@@ -136,16 +136,29 @@ public class Pulley : MonoBehaviour
 
     void UpdateRopeVisual()
     {
-        if (ropeRenderer == null || pulleyCenter == null) return;
+        List<Vector3> points = BuildRopePoints();
 
+        if (chainLinkPrefab != null)
+        {
+            UpdateChainLinks(points);
+        }
+        else if (ropeRenderer != null)
+        {
+            ropeRenderer.positionCount = points.Count;
+            ropeRenderer.SetPositions(points.ToArray());
+        }
+    }
+
+    private List<Vector3> BuildRopePoints()
+    {
         List<Vector3> points = new List<Vector3>();
 
-        float topY = pulleyCenter.position.y;
+        float topY = pulleyCenter != null ? pulleyCenter.position.y : transform.position.y;
         float topY2 = pulleyCenter2 != null ? pulleyCenter2.position.y : topY;
 
         points.Add(platformA.position);
         points.Add(new Vector3(platformA.position.x, topY, 0f));
-        points.Add(pulleyCenter.position);
+        points.Add(pulleyCenter != null ? pulleyCenter.position : new Vector3(platformA.position.x, topY, 0f));
 
         if (pulleyCenter2 != null)
         {
@@ -158,8 +171,60 @@ public class Pulley : MonoBehaviour
         }
 
         points.Add(platformB.position);
+        return points;
+    }
 
-        ropeRenderer.positionCount = points.Count;
-        ropeRenderer.SetPositions(points.ToArray());
+    private void UpdateChainLinks(List<Vector3> points)
+    {
+        int linkIndex = 0;
+        float cornerGap = linkSpacing * 0.6f; // 코너 양쪽에 남길 여백
+
+        for (int seg = 0; seg < points.Count - 1; seg++)
+        {
+            Vector3 start = points[seg];
+            Vector3 end = points[seg + 1];
+            float segLen = Vector3.Distance(start, end);
+
+            // 너무 짧은 선분은 코너 처리용이므로 건너뜀
+            if (segLen < linkSpacing) continue;
+
+            Vector3 dir = (end - start).normalized;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
+
+            // 코너 겹침 방지: 선분 양 끝에서 cornerGap만큼 안쪽부터 배치
+            bool isFirst = (seg == 0);
+            bool isLast  = (seg == points.Count - 2);
+            float drawStart = isFirst ? 0f : cornerGap;
+            float drawEnd   = isLast  ? segLen : segLen - cornerGap;
+            float drawLen   = drawEnd - drawStart;
+
+            if (drawLen < linkSpacing) continue;
+
+            int count = Mathf.Max(1, Mathf.FloorToInt(drawLen / linkSpacing));
+            float actualSpacing = drawLen / count;
+            float offset = drawStart + actualSpacing * 0.5f;
+
+            for (int i = 0; i < count; i++)
+            {
+                Vector3 pos = start + dir * (offset + i * actualSpacing);
+
+                if (linkIndex >= chainLinks.Count)
+                {
+                    GameObject link = Instantiate(chainLinkPrefab, pos, Quaternion.Euler(0, 0, angle), transform);
+                    chainLinks.Add(link);
+                }
+                else
+                {
+                    chainLinks[linkIndex].SetActive(true);
+                    chainLinks[linkIndex].transform.position = pos;
+                    chainLinks[linkIndex].transform.rotation = Quaternion.Euler(0, 0, angle);
+                }
+
+                linkIndex++;
+            }
+        }
+
+        for (int i = linkIndex; i < chainLinks.Count; i++)
+            chainLinks[i].SetActive(false);
     }
 }
