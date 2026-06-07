@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1112527033370489608}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.89, y: -1.39, z: 0}
+  m_LocalPosition: {x: 13.83, y: -1.39, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -165,9 +165,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pulley
   platformA: {fileID: 7255075712436324652}
   platformB: {fileID: 2613785990310027108}
-  totalRopeLength: 5
   moveSpeed: 2
   boxWeight: 1.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   ropeRenderer: {fileID: 7337641484278529228}
   pulleyCenter: {fileID: 5039102243744939522}
   pulleyCenter2: {fileID: 4038382853908329634}
