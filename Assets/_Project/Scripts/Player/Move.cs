@@ -35,6 +35,7 @@ public class Move : NetworkBehaviour
             gameObject.layer = 6;
             body.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Water");
             head.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("WaterHead");
+            gameObject.name = "Water";
             GameManager.Instance.waterGirl = this;
         }
         else 
@@ -42,6 +43,7 @@ public class Move : NetworkBehaviour
             Debug.Log("호스트 프리펩 생성");
             body.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Fire");
             head.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("FireHead");
+            gameObject.name = "Fire";
             GameManager.Instance.fireMan = this;
             fire = true;
         }

@@ -5,19 +5,20 @@ public class Hazard : MonoBehaviour
     public enum HazardType { Fire, Water, Both }
     public HazardType type = HazardType.Both;
 
+    [SerializeField] private LayerMask fireboyLayer;
+    [SerializeField] private LayerMask watergirlLayer;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Player")) return;
-
-        string name = collision.gameObject.name;
-        bool isFireboy   = name.Contains("Fire");
-        bool isWatergirl = name.Contains("Water");
+        int objLayer = 1 << collision.gameObject.layer;
+        bool isFireboy   = (fireboyLayer.value & objLayer) != 0;
+        bool isWatergirl = (watergirlLayer.value & objLayer) != 0;
 
         bool shouldDie = type switch
         {
-            HazardType.Fire  => isWatergirl, // 불 웅덩이: 물소녀만 죽음
-            HazardType.Water => isFireboy,   // 물 웅덩이: 불소년만 죽음
-            HazardType.Both  => true,
+            HazardType.Fire  => isWatergirl,
+            HazardType.Water => isFireboy,
+            HazardType.Both  => isFireboy || isWatergirl,
             _ => false
         };
 
