@@ -2,16 +2,19 @@ using UnityEngine;
 
 public class Lever : MonoBehaviour
 {
+    public Door targetDoor;
     public bool State; //¿ÞÂÊ false ¿À¸¥ÂÊ true
     private void OnCollisionStay2D(Collision2D collision)
     {
         if(gameObject.transform.rotation.z > 35) 
         {
             State = false;
+            targetDoor.Close();
         }
         else if(gameObject.transform.rotation.z > -35) 
         {
             State = true;
+            targetDoor.Open();
         }
     }
 }
