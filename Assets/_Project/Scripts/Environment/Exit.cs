@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Exit : MonoBehaviour
 {
     public enum ExitType { Fire, Water }
     public ExitType type;
 
-    [SerializeField] private LayerMask fireboyLayer;
-    [SerializeField] private LayerMask watergirlLayer;
+    public Animator animator;
+    [SerializeField] private float animSpeed = 1f;
+    private float animTime = 0f;
 
     private static bool fireReady = false;
     private static bool waterReady = false;
@@ -16,17 +16,21 @@ public class Exit : MonoBehaviour
     private Collider2D exitCollider;
     private HashSet<Collider2D> playersInside = new HashSet<Collider2D>();
 
+    private void Awake()
+    {
+        if (animator == null) animator = GetComponent<Animator>();
+        exitCollider = GetComponent<Collider2D>();
+    }
+
     private void OnEnable()
     {
         if (type == ExitType.Fire) fireReady = false;
         else waterReady = false;
-        exitCollider = GetComponent<Collider2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-            playersInside.Add(collision);
+        playersInside.Add(collision);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -50,17 +54,25 @@ public class Exit : MonoBehaviour
         if (type == ExitType.Fire) fireReady = ready;
         else waterReady = ready;
 
+        if (animator != null)
+        {
+            float target = ready ? 1f : 0f;
+            animTime = Mathf.MoveTowards(animTime, target, Time.deltaTime * animSpeed);
+            int stateHash = animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
+            animator.Play(stateHash, 0, animTime);
+            animator.speed = 0f;
+        }
+
         if (fireReady && waterReady)
-            LoadNextLevel();
+            GameManager.Instance.NextStage();
     }
 
     private bool IsCorrectPlayer(Collider2D col)
     {
-        int objLayer = 1 << col.gameObject.layer;
-        bool isFireboy   = (fireboyLayer.value & objLayer) != 0;
-        bool isWatergirl = (watergirlLayer.value & objLayer) != 0;
-        return (type == ExitType.Fire && isFireboy) ||
-               (type == ExitType.Water && isWatergirl);
+        Move move = col.GetComponentInParent<Move>();
+        if (move == null) return false;
+        return (type == ExitType.Fire  &&  move.fire) ||
+               (type == ExitType.Water && !move.fire);
     }
 
     private bool IsHalfOverlapping(Collider2D col)
@@ -76,22 +88,15 @@ public class Exit : MonoBehaviour
         float overlapArea = overlapX * overlapY;
         float playerArea = p.size.x * p.size.y;
 
-        return overlapArea >= playerArea * 0.5f;
+        return overlapArea >= playerArea * 0.1f;
     }
 
     private bool IsGrounded(Collider2D col)
     {
-        Rigidbody2D rb = col.GetComponent<Rigidbody2D>();
+        Rigidbody2D rb = col.GetComponentInParent<Rigidbody2D>();
         if (rb == null) return false;
-        return Mathf.Abs(rb.linearVelocity.y) < 0.1f;
+        return Mathf.Abs(rb.linearVelocity.y) < 0.5f;
     }
 
-    private void LoadNextLevel()
-    {
-        int next = SceneManager.GetActiveScene().buildIndex + 1;
-        if (next < SceneManager.sceneCountInBuildSettings)
-            SceneManager.LoadScene(next);
-        else
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+
 }
