@@ -119,67 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &19872845
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -28659251336651611, guid: 363a0bd6b746fc943881dcf515d18cda, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 2493672499
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: 363a0bd6b746fc943881dcf515d18cda, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -32.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: 363a0bd6b746fc943881dcf515d18cda, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -7.16
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: 363a0bd6b746fc943881dcf515d18cda, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: 363a0bd6b746fc943881dcf515d18cda, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: 363a0bd6b746fc943881dcf515d18cda, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: 363a0bd6b746fc943881dcf515d18cda, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: 363a0bd6b746fc943881dcf515d18cda, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: 363a0bd6b746fc943881dcf515d18cda, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: 363a0bd6b746fc943881dcf515d18cda, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: 363a0bd6b746fc943881dcf515d18cda, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5941447738101466774, guid: 363a0bd6b746fc943881dcf515d18cda, type: 3}
-      propertyPath: m_Name
-      value: SingleWater
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 363a0bd6b746fc943881dcf515d18cda, type: 3}
 --- !u!1 &47085399
 GameObject:
   m_ObjectHideFlags: 0
@@ -4140,67 +4079,6 @@ SpriteMask:
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
   m_MaskSource: 0
---- !u!1001 &884568615
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -4420990064059900645, guid: dbacc0ce95150dc42a82c321bfd1f287, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 2847465869
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: dbacc0ce95150dc42a82c321bfd1f287, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -34.66
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: dbacc0ce95150dc42a82c321bfd1f287, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -7.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: dbacc0ce95150dc42a82c321bfd1f287, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: dbacc0ce95150dc42a82c321bfd1f287, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: dbacc0ce95150dc42a82c321bfd1f287, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: dbacc0ce95150dc42a82c321bfd1f287, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: dbacc0ce95150dc42a82c321bfd1f287, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: dbacc0ce95150dc42a82c321bfd1f287, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: dbacc0ce95150dc42a82c321bfd1f287, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 726606378886893867, guid: dbacc0ce95150dc42a82c321bfd1f287, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5941447738101466774, guid: dbacc0ce95150dc42a82c321bfd1f287, type: 3}
-      propertyPath: m_Name
-      value: SingleFire
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: dbacc0ce95150dc42a82c321bfd1f287, type: 3}
 --- !u!1 &923165093
 GameObject:
   m_ObjectHideFlags: 0
@@ -7502,10 +7380,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea922cfefaa5bd49b3acf3a8b1ffdfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SliderMirrorController
-  targetMirror: {fileID: 706348936}
-  maxDistance: 2.5
-  leftEndAngle: 0
-  rightEndAngle: 90
 --- !u!58 &1594740816
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -7581,11 +7455,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3655f827442c24b459896c7e5742a539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SliderCenterMirrorController
-  targetMirror: {fileID: 706348936}
-  maxDistance: 2.5
-  centerAngle: 0
-  maxLeftTurnAngle: 45
-  maxRightTurnAngle: -45
 --- !u!114 &1594740819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17173,8 +17042,6 @@ SceneRoots:
   - {fileID: 964939451}
   - {fileID: 1209391128}
   - {fileID: 619044980}
-  - {fileID: 884568615}
-  - {fileID: 19872845}
   - {fileID: 1312203618}
   - {fileID: 1558552653}
   - {fileID: 1200403395}
