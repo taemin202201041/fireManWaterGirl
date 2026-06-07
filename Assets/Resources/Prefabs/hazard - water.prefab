@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2794303496609427390}
   - component: {fileID: 3231840069407152571}
   - component: {fileID: 1682580904302105504}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: hazard - water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.47, y: -2.62, z: 0.008797536}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.15, y: 0.8, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2334772296650550938}
@@ -129,11 +129,11 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.21133333}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -143,7 +143,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 7.2, y: 1.2}
   m_EdgeRadius: 0
 --- !u!114 &3231840069407152571
 MonoBehaviour:
