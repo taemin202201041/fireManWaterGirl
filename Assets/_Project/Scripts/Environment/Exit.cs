@@ -7,6 +7,9 @@ public class Exit : MonoBehaviour
     public enum ExitType { Fire, Water }
     public ExitType type;
 
+    [SerializeField] private LayerMask fireboyLayer;
+    [SerializeField] private LayerMask watergirlLayer;
+
     private static bool fireReady = false;
     private static bool waterReady = false;
 
@@ -53,9 +56,11 @@ public class Exit : MonoBehaviour
 
     private bool IsCorrectPlayer(Collider2D col)
     {
-        string playerName = col.gameObject.name;
-        return (type == ExitType.Fire && playerName.Contains("Fire")) ||
-               (type == ExitType.Water && playerName.Contains("Water"));
+        int objLayer = 1 << col.gameObject.layer;
+        bool isFireboy   = (fireboyLayer.value & objLayer) != 0;
+        bool isWatergirl = (watergirlLayer.value & objLayer) != 0;
+        return (type == ExitType.Fire && isFireboy) ||
+               (type == ExitType.Water && isWatergirl);
     }
 
     private bool IsHalfOverlapping(Collider2D col)
