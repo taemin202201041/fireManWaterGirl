@@ -6,12 +6,13 @@ public class Lever : MonoBehaviour
     public bool State; //¿ÞÂÊ false ¿À¸¥ÂÊ true
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if(gameObject.transform.rotation.z > 35) 
+        Debug.Log(gameObject.transform.rotation.z);
+        if(gameObject.transform.rotation.z > 0.3) 
         {
             State = false;
             targetDoor.Close();
         }
-        else if(gameObject.transform.rotation.z > -35) 
+        else if(gameObject.transform.rotation.z < -0.3) 
         {
             State = true;
             targetDoor.Open();
