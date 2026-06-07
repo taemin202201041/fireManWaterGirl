@@ -31,6 +31,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
+        {
+            isGameOver = false;
+            RestartStage();
+        }
+    }
+
     public void NextStage()
     {
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
