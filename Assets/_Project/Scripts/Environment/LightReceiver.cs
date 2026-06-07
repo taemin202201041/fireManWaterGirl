@@ -3,6 +3,8 @@ using UnityEngine.Events;
 
 public class LightReceiver : MonoBehaviour
 {
+    public Door door;
+
     public UnityEvent onActivate;
     public UnityEvent onDeactivate;
 
@@ -12,14 +14,20 @@ public class LightReceiver : MonoBehaviour
     public void Activate()
     {
         isActive = true;
-        if (!wasActive)
-            onActivate?.Invoke();
     }
 
     void LateUpdate()
     {
-        if (wasActive && !isActive)
+        if (isActive && !wasActive)
+        {
+            door?.Open();
+            onActivate?.Invoke();
+        }
+        else if (!isActive && wasActive)
+        {
+            door?.Close();
             onDeactivate?.Invoke();
+        }
 
         wasActive = isActive;
         isActive = false;
