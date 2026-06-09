@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public Move fireMan;
     public Move waterGirl;
     public Map Map;
+    public int gemCount;
+    public int gemCountTemp;
     bool temp; //맵 중복 실행 방지용
 
     private void Awake()
@@ -31,7 +33,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     private void Update()
     {
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
     {
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings && temp ==false)
-        { Invoke(nameof(go), 0.5f); temp = true; }
+        { gemCount += gemCountTemp; Invoke(nameof(go), 0.5f); temp = true; }
         else
             Debug.Log("모든 스테이지를 클리어했습니다!");
     }
@@ -65,7 +66,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("게임 오버! 3초 후 스테이지를 재시작합니다.");
         Invoke(nameof(RestartStage), 0f);
     }
-
     private void RestartStage()
     {
         isGameOver = false;

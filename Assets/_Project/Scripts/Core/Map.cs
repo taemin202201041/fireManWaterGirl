@@ -10,6 +10,7 @@ public class Map : MonoBehaviour
     {
         PlayerSetting();
         GameManager.Instance.Map = this;
+        GameManager.Instance.gemCountTemp = 0;
     }
     public void PlayerSetting() 
     {

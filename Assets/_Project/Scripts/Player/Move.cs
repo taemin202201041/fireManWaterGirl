@@ -65,10 +65,9 @@ public class Move : NetworkBehaviour
             playerCollider.sharedMaterial = mat;
         }
     }
-
     private void Update()
     {
-        if (Input.GetKey(leftkey)) 
+        if (Input.GetKey(leftkey) || MobileControl.leftPressed) 
         { 
             sprite.flipX = true;
             if (fire)
@@ -80,7 +79,7 @@ public class Move : NetworkBehaviour
                 head.gameObject.transform.SetLocalPositionAndRotation(new Vector3(0.2f, 0.65f, 0), new Quaternion(0, 180, 0, 0));
             }
         }
-        if (Input.GetKey(rightkey)) 
+        if (Input.GetKey(rightkey) || MobileControl.rightPressed)
         { 
             sprite.flipX = false;
             if (fire)
@@ -95,10 +94,12 @@ public class Move : NetworkBehaviour
 
         // BUG1 FIX: Update에서 IsGrounded() 호출 → FixedUpdate 타이밍과 불일치 방지
         // jumpRequested 플래그만 세우고 실제 판정은 FixedUpdate에서 수행
-        if (Input.GetKeyDown(upkey))
+        if (Input.GetKeyDown(upkey) || MobileControl.jumpDown)
             jumpRequested = true;
-        if (Input.GetKeyUp(upkey))
+
+        if (Input.GetKeyUp(upkey) || MobileControl.jumpUp)
             jumpCutRequested = true;
+        MobileControl.ResetOneFrameInput();
     }
 
     private void FixedUpdate()
@@ -131,9 +132,13 @@ public class Move : NetworkBehaviour
         }
 
         float moveX = 0f;
-        if (Input.GetKey(leftkey)) moveX = -1f;
-        if (Input.GetKey(rightkey)) moveX = 1f;
-        if(moveX == 0) 
+
+        if (Input.GetKey(leftkey) || MobileControl.leftPressed)
+            moveX = -1f;
+
+        if (Input.GetKey(rightkey) || MobileControl.rightPressed)
+            moveX = 1f;
+        if (moveX == 0) 
         {
             head.Play("Idle");
             body.Play("Idle");

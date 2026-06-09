@@ -33,10 +33,13 @@ EditorBuildSettings:
     path: Assets/Map0RE.unity
     guid: 9a95314101d3a9142b84d3af46eb5211
   - enabled: 1
+    path: Assets/Map5Re.unity
+    guid: 50023d2260dc6f5408b08235f95cd1ba
+  - enabled: 1
     path: Assets/Map3RE.unity
     guid: 439041db5e86f614199d5c00190c84c5
   - enabled: 1
-    path: Assets/Map5Re.unity
-    guid: 50023d2260dc6f5408b08235f95cd1ba
+    path: Assets/Ending.unity
+    guid: 2935b5a1ca65bf74bb3acf1af737ca06
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
