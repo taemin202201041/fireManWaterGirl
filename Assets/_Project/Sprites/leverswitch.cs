@@ -25,21 +25,17 @@ public class LeverSwitch : MonoBehaviour
 
     void Update()
     {
-        if (isMoving)
+        //레버가 목표 각도에 도달했는지 감지
+        if (leverHandle.transform.rotation.z < -0.25 && isLeft == true)
         {
-            float currentZ = leverHandle.eulerAngles.z;
-            float nextZ = Mathf.MoveTowardsAngle(currentZ, targetZRotation, leverSpeed * 100f * Time.deltaTime);
-            leverHandle.rotation = Quaternion.Euler(0, 0, nextZ);
-
-            //레버가 목표 각도에 도달했는지 감지
-            if (Mathf.Abs(Mathf.DeltaAngle(nextZ, targetZRotation)) < 0.1f)
-            {
-                leverHandle.rotation = Quaternion.Euler(0, 0, targetZRotation);
-                isMoving = false; // 레버 이동 종료
-
-                // 레버가 완전히 다 움직이고 나서야 거울을 돌립니다!
-                TriggerMirrorRotation();
-            }
+            // 레버가 완전히 다 움직이고 나서야 거울을 돌립니다!
+            targetMirror.RotateClockwise(); // 거울 시계방향 회전
+            isLeft = false;
+        }
+        else if (leverHandle.transform.rotation.z > 0.25 && isLeft == false)
+        {
+            targetMirror.RotateCounterClockwise(); // 거울 반시계방향 회전 }
+            isLeft = true;
         }
     }
 
