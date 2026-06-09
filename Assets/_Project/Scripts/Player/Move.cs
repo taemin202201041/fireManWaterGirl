@@ -65,10 +65,9 @@ public class Move : NetworkBehaviour
             playerCollider.sharedMaterial = mat;
         }
     }
-
     private void Update()
     {
-        if (Input.GetKey(leftkey)) 
+        if (Input.GetKey(leftkey) || MobileControl.leftPressed) 
         { 
             sprite.flipX = true;
             if (fire)
@@ -80,7 +79,7 @@ public class Move : NetworkBehaviour
                 head.gameObject.transform.SetLocalPositionAndRotation(new Vector3(0.2f, 0.65f, 0), new Quaternion(0, 180, 0, 0));
             }
         }
-        if (Input.GetKey(rightkey)) 
+        if (Input.GetKey(rightkey) || MobileControl.rightPressed)
         { 
             sprite.flipX = false;
             if (fire)
