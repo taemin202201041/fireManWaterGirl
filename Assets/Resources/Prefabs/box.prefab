@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 610424573459914850}
   - component: {fileID: 6959434722133739925}
   - component: {fileID: 2285539220047499819}
-  - component: {fileID: 8429878303405854476}
   m_Layer: 7
   m_Name: box
   m_TagString: Untagged
@@ -180,17 +179,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.69, y: 0.69}
   m_EdgeRadius: 0
---- !u!114 &8429878303405854476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6249223444798161540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33aeaadcadd1c8e48915d925231d137f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Map
-  fireManStartPositon: {x: 7, y: 0}
-  WaterGirlStartPositon: {x: 9, y: 0}

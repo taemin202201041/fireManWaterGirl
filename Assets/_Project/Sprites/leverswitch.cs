@@ -5,39 +5,79 @@ public class LeverSwitch : MonoBehaviour
     [Header("연결할 거울 오브젝트")]
     public RotatableMirror targetMirror;
 
-    [Header("레버 오브젝트 (HingeJoint가 붙은 것)")]
+    [Header("레버 부드러운 회전 세팅")]
     public Transform leverHandle;
+    public float leverSpeed = 5f;
+    public float leftAngle = 45f;
+    public float rightAngle = -45f;
 
-    private bool isRotated = false; // 거울이 중복으로 계속 도는 것을 방지하는 안전장치
+    private float targetZRotation;
+    private bool isLeft = true;
+    private bool isMoving = false; // 레버가 현재 움직이는 중인지 체크
 
     void Start()
     {
         if (leverHandle == null) leverHandle = transform;
+
+        targetZRotation = leftAngle;
+        leverHandle.rotation = Quaternion.Euler(0, 0, leftAngle);
     }
 
     void Update()
     {
-        if (leverHandle == null || targetMirror == null) return;
+        //레버가 목표 각도에 도달했는지 감지
+        if (leverHandle.transform.rotation.z < -0.25 && isLeft == true)
+        {
+            // 레버가 완전히 다 움직이고 나서야 거울을 돌립니다!
+            targetMirror.RotateClockwise(); // 거울 시계방향 회전
+            isLeft = false;
+        }
+        else if (leverHandle.transform.rotation.z > 0.25 && isLeft == false)
+        {
+            targetMirror.RotateCounterClockwise(); // 거울 반시계방향 회전 }
+            isLeft = true;
+        }
+    }
 
-        // 레버의 현재 Z축 오일러 각도를 가져옵니다 (0 ~ 360)
-        float currentZ = leverHandle.localEulerAngles.z;
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        // 플레이어가 쳤고, 레버가 이미 움직이는 중이 아닐 때만 작동
+        if (other.CompareTag("Player") && !isMoving)
+        {
+            StartLeverMovement();
+        }
+    }
 
-        // 각도를 -180 ~ 180 범위로 변환하여 계산하기 쉽게 만듭니다.
-        if (currentZ > 180f) currentZ -= 360f;
+    // 1단계: 플레이어와 부딪히면 레버만 먼저 움직이기 시작합니다.
+    void StartLeverMovement()
+    {
+        isMoving = true;
 
-        // [체크] 레버가 오른쪽(음수 각도, 예: -40도 이하)으로 끝까지 밀렸을 때
-        if (!isRotated && currentZ < -35f)
+        if (isLeft) targetZRotation = rightAngle; // 우측으로 눕기 시작
+        else targetZRotation = leftAngle;         // 좌측으로 눕기 시작
+
+        isLeft = !isLeft;
+    }
+
+    // 2단계: 레버가 끝까지 다 도착하면 호출되는 함수
+    void TriggerMirrorRotation()
+    {
+        if (targetMirror == null)
+        {
+            Debug.LogWarning("레버에 연결된 거울이 없습니다!");
+            return;
+        }
+
+        // 레버가 우측으로 눕기가 완료되었다면
+        if (!isLeft)
         {
             targetMirror.RotateClockwise(); // 거울 시계방향 회전
-            isRotated = true;
-            Debug.Log("레버 오른쪽 작동 완료 -> 거울 시계방향 회전!");
         }
-        // [체크] 레버가 다시 왼쪽(양수 각도, 예: 40도 이상)으로 돌아왔을 때
-        else if (isRotated && currentZ > 35f)
+        else
         {
             targetMirror.RotateCounterClockwise(); // 거울 반시계방향 회전
-            isRotated = false;
-            Debug.Log("레버 왼쪽 작동 완료 -> 거울 반시계방향 회전!");
         }
+
+        Debug.Log("레버 작동 완료 감지 ➔ 거울 회전 시작!");
     }
 }
